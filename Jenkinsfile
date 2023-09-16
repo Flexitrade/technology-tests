@@ -9,10 +9,10 @@ pipeline {
     }
     
     post {
-      success {
+      failure {
         discordSend description: "${currentBuild.fullDisplayName}", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "SUCCEEDED", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
-      failure {
+      success {
         discordSend description: "${currentBuild.rawBuild.getLog(10)}", footer: "${currentBuild.fullDisplayName}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "FAILED", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
     }
