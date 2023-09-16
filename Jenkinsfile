@@ -13,7 +13,7 @@ pipeline {
         discordSend description: "${currentBuild.fullDisplayName}", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "SUCCEEDED", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
       failure {
-        def buildFailure = tm('${BUILD_FAILURE_ANALYZER}')
+        buildFailure = tm('${BUILD_FAILURE_ANALYZER}')
         discordSend description: buildFailure, footer: "${currentBuild.fullDisplayName}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "FAILED", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
     }
