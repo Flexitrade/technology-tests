@@ -3,17 +3,17 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'mvn --version'
+                sh 'mvn -version'
             }
         }
     }
     
     post {
-      failure {
+      success {
         discordSend description: "${currentBuild.fullDisplayName}", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "SUCCEEDED", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
-      success {
-        discordSend description: "${currentBuild.rawBuild.getLog(10)}", footer: "${currentBuild.fullDisplayName}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "FAILED", webhookURL: "${DISCORD_WEBHOOKURL}"
+      failure {
+        discordSend description: "${BUILD_FAILURE_ANALYZER}", footer: "${currentBuild.fullDisplayName}", link: env.BUILD_URL, result: currentBuild.currentResult, title: "FAILED", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
     }
 }
