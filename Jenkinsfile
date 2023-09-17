@@ -3,17 +3,17 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'exit 1'
+                sh 'exit 0'
             }
         }
     }
     
     post {
       success {
-        discordSend description: "build took ${currentBuild.durationString}", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "[${currentBuild.fullDisplayName}] SUCCEEDED", webhookURL: "${DISCORD_WEBHOOKURL}"
+        discordSend description: "build took ${currentBuild.durationString}", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "${currentBuild.fullDisplayName} SUCCEEDED", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
       failure {
-        discordSend description: "build id is ${currentBuild.displayName}\nbuild took ${currentBuild.durationString}\nplease check log output for error message!", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "FAILED ${currentBuild.fullDisplayName}!", webhookURL: "${DISCORD_WEBHOOKURL}"
+        discordSend description: "build id is ${currentBuild.displayName}\nbuild took ${currentBuild.durationString}\n\nPlease check log output for error message!", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "FAILED ${currentBuild.fullDisplayName}!", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
     }
 }
