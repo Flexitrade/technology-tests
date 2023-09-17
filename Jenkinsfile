@@ -10,10 +10,10 @@ pipeline {
     
     post {
       success {
-        discordSend description: "id: ${currentBuild.displayName}\build-time: ${currentBuild.durationString}", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "[${currentBuild.fullDisplayName}] SUCCEEDED", webhookURL: "${DISCORD_WEBHOOKURL}"
+        discordSend description: "build took ${currentBuild.durationString}", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "[${currentBuild.fullDisplayName}] SUCCEEDED", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
       failure {
-        discordSend description: "id: ${currentBuild.displayName}\nbuild-time: ${currentBuild.durationString}\nPlease check log output for error message!", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "[${currentBuild.fullDisplayName}] FAILED!", webhookURL: "${DISCORD_WEBHOOKURL}"
+        discordSend description: "build id is ${currentBuild.displayName}\nbuild took ${currentBuild.durationString}\nplease check log output for error message!", footer: "", link: env.BUILD_URL, result: currentBuild.currentResult, title: "FAILED ${currentBuild.fullDisplayName}!", webhookURL: "${DISCORD_WEBHOOKURL}"
       }
     }
 }
